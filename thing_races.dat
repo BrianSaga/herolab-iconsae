@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the assortment of races for the game system. The special
+      advantages of each race are conferred through a combination of scripts and
+      automatic assignment of special Powers. All special Powers are assigned
+      via the bootstrapping of the Power, resulting in the Power being
+      automatically assigned to the actor whenever the race is selected. If an Power
+      is both user-selected AND conferred by a race, the Power only appears a single
+      time because it all Powers are "unique".
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- Human Race -->
+  <thing
+    id="orTrained"
+    name="Trained"
+    compset="Race"
+    isunique="yes"
+    description="The hero is a highly skilled individual; any 'powers' actually come from superior training or specialized equipment (see Devices in the Powers chapter). The character gains two additional specialties, and can choose to trade a power for two more specialties.">
+    <eval index="1" phase="PreTraits" priority="5000">
+      <before name="Calc trtFinal"/><![CDATA[
+      ~hero.child[resPower].field[resMax].value += 1
+      ]]></eval>
+    </thing>
+
+  <!-- Dwarf Race -->
+  <thing
+    id="orTrans"
+    name="Transformed"
+    compset="Race"
+    isunique="yes"
+    description="The hero was a normal human but became superhuman through some outside agency, often an accident or experiment. One of the character’s Powers of your choice (attribute or power) is increased by +2 to a maximum of 10.">
+   <!--    
+   <bootstrap thing="abTough"/>
+    <bootstrap thing="abDefender"/>
+	 -->
+    <eval index="1" phase="PreTraits" priority="5000">
+      <before name="Calc trtFinal"/><![CDATA[
+      ~#traitbonus[attrCon] += 1
+      ~#traitbonus[attrCha] -= 1
+      ]]></eval>
+    </thing>
+
+   <thing
+    id="orBirth"
+    name="Birthright"
+    compset="Race"
+    isunique="yes"
+    description="The hero was born with or destined to develop superhuman powers. The character gains your choice of one additional power—which should be innate, and not a device—or +2 to a rolled power level of your choice, to a maximum of 10.">
+    <eval index="1" phase="PreTraits" priority="5000">
+      <before name="Calc trtFinal"/><![CDATA[
+      ~hero.child[resPower].field[resMax].value += 1
+      ]]></eval>
+    </thing>
+	
+   <thing
+    id="orGimmick"
+    name="Gimmick"
+    compset="Race"
+    isunique="yes"
+    description="The character’s powers all come from devices of some kind (see Devices in the Powers chapter). One of the character’s mental attributes of your choice is increased by +2, to a maximum of 10.">
+    <eval index="1" phase="PreTraits" priority="5000">
+      <before name="Calc trtFinal"/><![CDATA[
+      ~hero.child[resPower].field[resMax].value += 1
+      ]]></eval>
+    </thing>
+	
+   <thing
+    id="orArtif"
+    name="Artificial"
+    compset="Race"
+    isunique="yes"
+    description="The character is a robot or some other kind of construct, such as a golem. The character’s Strength is increased by +2 and has the Life Support power in addition to any rolled powers; roll Life Support level normally, or trade a rolled power to increase it to 10.">
+    <eval index="1" phase="PreTraits" priority="5000">
+      <before name="Calc trtFinal"/><![CDATA[
+      ~hero.child[resPower].field[resMax].value += 1
+      ]]></eval>
+    </thing>
+
+   <thing
+    id="orUnearth"
+    name="Unearthly"
+    compset="Race"
+    isunique="yes"
+    description="The character is an alien, elemental, angel, devil, or even deity—a being from another world or dimension. Increase two of the character’s Powers of your choice (attributes or powers) by +2. Alternately, roll twice on this table, ignoring duplicates and results of 11-12. The character gets the effects of both origins. Apply the modifiers of the rolled origins rather than the Unearthly modifiers.">
+    <eval index="1" phase="PreTraits" priority="5000">
+      <before name="Calc trtFinal"/><![CDATA[
+      ~hero.child[resPower].field[resMax].value += 1
+      ]]></eval>
+    </thing>	
+  </document>

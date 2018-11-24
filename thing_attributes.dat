@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the assortment of attributes possessed by every actor for the
+      game system. The display order of attributes is controlled via the assignment of
+      an "explicit" tag with the relative position of each.
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- Strength Attribute -->
+  <thing
+    id="attrStr"
+    name="Strength"
+    compset="Attribute"
+    isunique="yes"
+    description="Description goes here">
+    <fieldval field="trtAbbrev" value="Str"/>
+    <tag group="explicit" tag="1"/>
+    </thing>
+
+  <!-- Dexterity Attribute -->
+  <thing
+    id="attrCoo"
+    name="Coordination"
+    compset="Attribute"
+    isunique="yes"
+    description="Description goes here">
+    <fieldval field="trtAbbrev" value="Coo"/>
+    <tag group="explicit" tag="2"/>
+    </thing>
+
+  <!-- Constitution Attribute -->
+  <thing
+    id="attrPro"
+    name="Prowess"
+    compset="Attribute"
+    isunique="yes"
+    description="Description goes here">
+    <fieldval field="trtAbbrev" value="Pro"/>
+    <tag group="explicit" tag="3"/>
+    </thing>
+
+  <!-- Intelligence Attribute -->
+  <thing
+    id="attrInt"
+    name="Intellect"
+    compset="Attribute"
+    isunique="yes"
+    description="Description goes here">
+    <fieldval field="trtAbbrev" value="Int"/>
+    <tag group="explicit" tag="4"/>
+    </thing>
+
+  <!-- Wisdom Attribute -->
+  <thing
+    id="attrAwa"
+    name="Awareness"
+    compset="Attribute"
+    isunique="yes"
+    description="Description goes here">
+    <fieldval field="trtAbbrev" value="Awa"/>
+    <tag group="explicit" tag="5"/>
+    </thing>
+
+  <!-- Charisma Attribute -->
+  <thing
+    id="attrWil"
+    name="Willpower"
+    compset="Attribute"
+    isunique="yes"
+    description="Description goes here">
+    <fieldval field="trtAbbrev" value="Wil"/>
+    <tag group="explicit" tag="6"/>
+    </thing>
+
+  </document>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the assortment of skills for the game system. Note that each
+      skill is linked to an associated attribute for the character. This linkage allows
+      the value of the skill to easily incorporate the effects of the linked attribute
+      via a script on the component.
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- Animal Handling Skill -->
+  <thing
+    id="skAnimal"
+    name="Animal Handling"
+    compset="Skill"
+    isunique="yes"
+    description="You know how to interact, work with, and train animals. Add your specialty bonus to any tests to do these things.">
+    <fieldval field="trtAbbrev" value="Anim"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+
+   <!-- Aerial Combat Skill -->
+  <thing
+    id="skAerial"
+    name="Aerial Combat"
+    compset="Skill"
+    isunique="yes"
+    description="You’re skilled at fighting in the air; add your specialty bonus to your defensive combat tests while you are gliding or flying.">
+    <fieldval field="trtAbbrev" value="Aer"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>
+	
+   <!-- Art Skill -->
+  <thing
+    id="skArt"
+    name="Art"
+    compset="Skill"
+    isunique="yes"
+    description="This is a specialty group for various artistic and creative specialties; add your specialty bonus to the appropriate Power (typically Coordination or Awareness) when creating a work of art. Art specialties include: Drawing, Painting, Poetry, Sculpture, Writing, and other types of fine arts. Choose one when you take this specialty.">
+    <fieldval field="trtAbbrev" value="Art"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+	
+   <!-- Athletics Skill -->
+  <thing
+    id="skAthlet"
+    name="Athletics"
+    compset="Skill"
+    isunique="yes"
+    description="Add your specialty bonus to tests for athletic actions like acrobatics, climbing, jumping, running swimming, and similar activities, including dodging (but not parrying) in combat. This generally includes riding mounts, unless the GM wants a separate Riding specialty in the game.">
+    <fieldval field="trtAbbrev" value="Athl"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>
+
+   <!-- Business Skill -->
+  <thing
+    id="skBusin"
+    name="Business"
+    compset="Skill"
+    isunique="yes"
+    description="Add your specialty bonus to tests involving business acumen or knowledge of the business world. Characters may have similar specialties related to other professions with specialized skills or knowledge.">
+    <fieldval field="trtAbbrev" value="Busi"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+	
+   <!-- Drive Skill -->
+  <thing
+    id="skDrive"
+    name="Drive"
+    compset="Skill"
+    isunique="yes"
+    description="Add your specialty bonus to tests involving operating surface vehicles of all sorts. This includes water vehicles, unless the GM wants a separate Sail specialty in the game.">
+    <fieldval field="trtAbbrev" value="Driv"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+	
+   <!-- Investigation Skill -->
+  <thing
+    id="skInvest"
+    name="Investigation"
+    compset="Skill"
+    isunique="yes"
+    description="You’re skilled at gathering and analyzing evidence from crime scenes, digging up information, tailing people, and finding lost people and items—in short, being a detective. Add your specialty bonus to these and related tests.">
+    <fieldval field="trtAbbrev" value="Inves"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+	
+   <!-- Law Skill -->
+  <thing
+    id="skLaw"
+    name="Law"
+    compset="Skill"
+    isunique="yes"
+    description="You have an extensive background in the law and may even be a licensed attorney. Add your specialty bonus to tests involving knowing or practicing law.">
+    <fieldval field="trtAbbrev" value="Law"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+	
+   <!-- Leadership Skill -->
+  <thing
+    id="skLeader"
+    name="Leadership"
+    compset="Skill"
+    isunique="yes"
+    description="You are a skilled and recognized leader, able to inspire confidence and determination in those under your guidance. When you are the leader of a team, you can give your teammates additional Determination (see Team Determination, previously). Leadership is also a useful specialty for tactical maneuvers to learn, create, or activate qualities (see Qualities, previously). A team can only have one recognized leader at a time.">
+    <fieldval field="trtAbbrev" value="Lead"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>
+	
+   <!-- Martial Arts Skill -->
+  <thing
+    id="skMart"
+    name="Martial Arts"
+    compset="Skill"
+    isunique="yes"
+    description="You’re capable in various forms of unarmed combat; add your specialty bonus to offensive and defensive unarmed combat tests other than wrestling (covered by the Wrestling specialty, following).">
+    <fieldval field="trtAbbrev" value="Mart"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>
+
+   <!-- Medicine Skill -->
+  <thing
+    id="skMedi"
+    name="Medicine"
+    compset="Skill"
+    isunique="yes"
+    description="You’re trained in providing health care; add your specialty bonus to a patient’s Power level when determining how quickly they recover (see Recovery in the Taking Action chapter).">
+    <fieldval field="trtAbbrev" value="Medn"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>	
+	
+   <!-- Mental Resistance Skill -->
+  <thing
+    id="skMenRes"
+    name="Mental Resistance"
+    compset="Skill"
+    isunique="yes"
+    description="You’re skilled in resisting outside influences, including certain mental powers. Add your specialty bonus to Willpower for resisting such things. This is similar to, but not the same as, the Mental Resistance power and you can have both (see Mental Resistance in the Powers chapter for details).">
+    <fieldval field="trtAbbrev" value="MnRs"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>
+
+   <!-- Military Skill -->
+  <thing
+    id="skMilitary"
+    name="Military"
+    compset="Skill"
+    isunique="yes"
+    description="You serve or served in a military or paramilitary; add your specialty bonus to your initiative (see Initiative in the Taking Action chapter) and all tests dealing with military protocols, information, and tactics.">
+    <fieldval field="trtAbbrev" value="Mili"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>	
+	
+   <!-- Occult Skill -->
+  <thing
+    id="skOccult"
+    name="Occult"
+    compset="Skill"
+    isunique="yes"
+    description="You’re knowledgeable about the occult and mystical; add your specialty bonus tests involving occult knowledge, research, or practice. Occult Master is useful for a broad range of stunts involving magical rituals. In settings featuring a lot of the mystical, the Game Master may wish to make this a specialty group, with distinct specialties for different occult traditions.">
+    <fieldval field="trtAbbrev" value="Occ"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>	
+
+   <!-- Performance Skill -->
+  <thing
+    id="skPerf"
+    name="Performance"
+    compset="Skill"
+    isunique="yes"
+    description="This specialty group involves the performing arts: Acting, Comedy, Dancing, Music, Singing, and so forth. Choose an art form and apply your specialty bonus to tests involving it. See Performing in the Taking Action chapter for details.">
+    <fieldval field="trtAbbrev" value="Perf"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>	
+
+   <!-- Pilot Skill -->
+  <thing
+    id="skPilot"
+    name="Pilot"
+    compset="Skill"
+    isunique="yes"
+    description="Add your specialty bonus to tests involving operating air and space vehicles of all sorts.">
+    <fieldval field="trtAbbrev" value="Pilot"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+	
+   <!-- Power Skill -->
+  <thing
+    id="skPower"
+    name="Power"
+    compset="Skill"
+    isunique="yes"
+    description="This specialty group covers various powers (see the Powers chapter) that require Power tests of diff erent sorts, particularly off ensive powers using Prowess and Coordination for attacks. Each power is a separate specialty: Blast, Fire Control, etc. Add your specialty bonus to Power tests for the power. This specialty does not increase power level or other effects of a power, but does apply to tests to perform stunts with the power (see Stunts, previously).">
+    <fieldval field="trtAbbrev" value="Power"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>
+
+   <!-- Psychiatry Skill -->
+  <thing
+    id="skPsych"
+    name="Psychiatry"
+    compset="Skill"
+    isunique="yes"
+    description="This specialty group covers various powers (see the Powers chapter) that require Power tests of diff erent sorts, particularly off ensive powers using Prowess and Coordination for attacks. Each power is a separate specialty: Blast, Fire Control, etc. Add your specialty bonus to Power tests for the power. This specialty does not increase power level or other effects of a power, but does apply to tests to perform stunts with the power (see Stunts, previously).">
+    <fieldval field="trtAbbrev" value="Psych"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>	
+	
+   <!-- Science Skill -->
+  <thing
+    id="skScience"
+    name="Science"
+    compset="Skill"
+    isunique="yes"
+    description="You’re skilled in the sciences; add your specialty bonus to tests involving scientific knowledge, research, and invention. Science Master is good for a wide range of stunts involving scientific formulae and invention. Some Game Masters may wish to make this a specialty group, with distinct specialties for individual sciences.">
+    <fieldval field="trtAbbrev" value="Scien"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+
+   <!-- Sleight of Hand Skill -->
+  <thing
+    id="skSleight"
+    name="Sleight of Hand"
+    compset="Skill"
+    isunique="yes"
+    description="You’re skilled in tricks of manual dexterity and add your specialty bonus to tests where such things would be useful, from magic tricks to picking pockets (or locks).">
+    <fieldval field="trtAbbrev" value="Slei"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+	
+   <!-- Stealth Skill -->
+  <thing
+    id="skStealth"
+    name="Stealth"
+    compset="Skill"
+    isunique="yes"
+    description="Add your specialty bonus to tests to avoid being noticed or to otherwise move and act covertly.">
+    <fieldval field="trtAbbrev" value="Stlth"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+	
+   <!-- Technology Skill -->
+  <thing
+    id="skTechn"
+    name="Technology"
+    compset="Skill"
+    isunique="yes"
+    description="Add your specialty bonus to tests involving creating, repairing, or working with technology and machines of all kinds. Technology Master is useful for all kinds of stunts involving inventions and devices. Some Game Masters may wish to make this a specialty group, with distinct specialties for particular technologies (Computers, Electronics, Mechanics, etc.).">
+    <fieldval field="trtAbbrev" value="Tech"/>
+    <tag group="DashTacCon" tag="NonCombat"/>
+    </thing>
+
+   <!-- Underwater Combat Skill -->
+  <thing
+    id="skUnder"
+    name="Underwater Combat"
+    compset="Skill"
+    isunique="yes"
+    description="You’re skilled at fi ghting under water; this specialty adds its bonus to your defensive combat tests while submerged. It is primarily useful to Aquatic characters (see Powers).">
+    <fieldval field="trtAbbrev" value="UnCom"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>
+	
+   <!-- Weapons Skill -->
+  <thing
+    id="skWeapons"
+    name="Weapons"
+    compset="Skill"
+    isunique="yes"
+    description="This specialty group involves the use of various kinds of weapons, both close and ranged weapons. Add your specialty bonus to tests to attack with weapons of the appropriate type. Weapons specialties include: Blades (all close slashing weapons), Bludgeons (all close bashing weapons), Bows (including crossbows), Guns (all other self-powered shooting weapons), and Throwing. Specifi c Weapons specialties may also exist for various exotic weapons at the GM’s discretion.">
+    <fieldval field="trtAbbrev" value="Weap"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>
+	
+   <!-- Wrestling Skill -->
+  <thing
+    id="skWrestl"
+    name="Wrestling"
+    compset="Skill"
+    isunique="yes"
+    description="You’re skilled in wrestling; add your specialty bonus to all wresting and escaping tests (see those tests in the Taking Action chapter).">
+    <fieldval field="trtAbbrev" value="Wrest"/>
+    <tag group="DashTacCon" tag="Combat"/>
+    </thing>   
+  </document>

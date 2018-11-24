@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the definition of the "powers" tab panel. This tab is where
+      the user selects the special powers for the character.
+
+      All public visual elements used with this tab panel start with the prefix "ab"
+      to associate them with the tab.
+-->
+
+<document signature="Hero Lab Data">
+
+
+  <!-- pwPower portal
+        Presents a dynamic table where the user can add special powers for the
+        character.
+
+        We use the "SimpleItem" template for selecting the special powers, since
+        all we need is basic information. We use a custom template for showing the
+        selected powers to highlight auto-added picks based on race selections.
+        In conjunction with this, the "fixedlast" attribute forces all non-deletable
+        picks (i.e. those that are auto-added) to be shown at the bottom of the list.
+
+        We use an "additem" script to highlight whether more powers need to be
+        selected. This requires that we specify the "addthing" referenced in the
+        script, which is the resource for tracking powers.
+
+        We use a "candidate" tag expression to limit the choices the user can make.
+        If omitted, all things derived from the "Power" component will be shown
+        to the user for selection. Using this tagexpr allows us to omit all powers
+        that have the "Hide.Power" tag. For example, the Flight Power needs to
+        behave as a normal Power, but we only want it available to characters that
+        select the "Avian" race. By assigning it the "Hide.Power" tag and using
+        the candidate tagexpr to omit those powers, Flight cannot be chosen by
+        non-Avian characters but it will also appear in the selected list if the
+        character choosed the Avian race.
+
+        We use a "titlebar" script to replace the default title on the choose form
+        with something more useful. Just like we did on the title portal above, we
+        include the summary information as helpful feedback to the user.
+
+        We use a "description" script to generate the appropriate information for
+        display to the user as a description when choosing special powers. We
+        call a general procedure for the game system for this purpose.
+
+        We use a "headertitle" script to place a suitable title above the table.
+        The title includes an indication of how many selections have been chosen
+        and how many remain, with appropriate color highlighting to prompt the user.
+  -->
+  <portal
+    id="pwPower"
+    style="tblNormal">
+    <table_dynamic
+      component="Power"
+      showtemplate="pwPick"
+      choosetemplate="pwChoice"
+      showfixedlast="yes"
+	  showsortset="PowerSort"
+	  choosesortset="PowerSort"
+      addpick="resCP">
+      <candidate>!Hide.Power</candidate>
+      <titlebar><![CDATA[
+        @text = "Add a Power - " & hero.child[resCP].field[resShort].text
+        ]]></titlebar>
+      <description/>
+      <headertitle><![CDATA[
+        @text = "Power: " & hero.child[resCP].field[resShort].text
+        ]]></headertitle>
+      <additem><![CDATA[
+        ~if we're in advancement mode, we've been frozen, so display accordingly
+        if (state.iscreate = 0) then
+          @text = "{text clrgrey}Add Powers Via Advances Tab"
+          done
+          endif
+
+        ~set the color based on whether the proper number of slots are allocated
+        if (#resleft[resCP] = 0) then
+          @text = "{text clrgrey}"
+        elseif (#resleft[resCP] < 0) then
+          @text = "{text clrwarning}"
+          endif
+        @text &= "Add New Power"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+
+  <!-- pwPick template
+        Displays the name of the pick/thing and an info button with the basic
+        description text. This is basically the "SimpleItem" template, with one
+        key difference. Auto-added powers such as those conferred by races are
+        sorted and colored differently to distinguish their nature.
+  -->
+   <template
+    id="pwPick"
+    name="Power Pick"
+    compset="Power"
+    marginhorz="2"
+    marginvert="3">
+
+   <portal
+      id="name"
+      style="lblLeft"
+      showinvalid="yes">
+      <label
+		ismultiline="yes">
+		<labeltext><![CDATA[
+		@text = "{size 50} " & field[livename].text
+		]]></labeltext>
+        </label>
+      </portal>
+	  
+	  <portal
+      id="total"
+      style="lblXLarge"
+      showinvalid="yes">
+      <label>
+		<labeltext><![CDATA[
+        var score as number
+		var ratedlevel as string
+		score = field[trtFinal].value
+		Call RatedLevel
+		@text = ratedlevel & " " & score
+		]]></labeltext>
+	  </label>
+      </portal> 
+
+	<portal
+	  id="edit"
+	  style="actEdit"
+	  tiptext="Edit Extras/Limits">
+	  <action
+		action="edit"
+		buttontext="">
+		</action>
+	  </portal>	 
+
+    <portal
+      id="usrsel"
+      style="lblSecond"
+      showinvalid="yes">
+      <label
+		ismultiline="yes">
+		<labeltext><![CDATA[
+			var kids as number
+			var x as number
+			var bonus as string
+			var limit as string
+			
+			var menu1 as string
+			var lblmenu1 as string
+			var menu2 as string
+			var lblmenu2 as string
+			var dom as string
+			var lblnotes as string
+			var notes as string
+			
+			var lbldom as string
+			var txt as string
+			var lbloptions as string
+			var options as string
+			var lblsource as string
+			var source as string
+			var extLim as string
+			
+			lblsource = "{b}Source: {/b}"
+			lbloptions = "{b}Option(s): {/b}"
+			lblnotes = "{b}Notes: {/b}"
+			
+			x = 0
+			extLim = "{text clrdisable}"
+			if (isgizmo <> 0) then
+				kids = gizmo.tagcount[Extra.?]
+				if (kids > 0) then
+					foreach pick in gizmo from Extra
+						x += 1
+						bonus &= eachpick.livename
+						if (x < kids) then
+							bonus &= ", "
+						endif
+					nexteach
+				endif
+			endif
+			x = 0
+			if (isgizmo <> 0) then
+				kids = gizmo.tagcount[Limit.?]
+				if (kids > 0) then
+					foreach pick in gizmo from Limit
+						x += 1
+						limit &= eachpick.livename
+						if (x < kids) then
+							limit &= ", "
+						endif
+					nexteach
+				endif
+			endif
+			if (length(bonus) = 0) then
+				extLim &= "{b}Extra(s){/b}: None. "
+			else
+				extLim &= "{b}Extra(s){/b}: " & bonus & ". "
+			endif
+			if (length(limit) = 0) then
+				extLim &= "{b}Limit(s){/b}: None. "
+			else	
+				extLim &= "{b}Limit(s){/b}: " & limit & ". "
+			endif
+			if (isgizmo <> 0) then
+				foreach pick in gizmo from PowerInfo
+					lblmenu1 = "{b}" & eachpick.field[usrLabel1].text & "{/b}: "
+					menu1 = eachpick.field[usrChosen1].chosen.field[name].text
+					lblmenu2 = "{b}" & eachpick.field[usrLabel2].text & "{/b}: "
+					menu2 = eachpick.field[usrChosen2].chosen.field[name].text
+					lbldom = "{b}Details{/b}: "
+					dom = eachpick.field[domDomain].text
+					notes = eachpick.field[powNotes].text
+				nexteach
+				foreach pick in gizmo where "PowerInfo.Source"
+					source &= eachpick.field[name].text
+				nexteach
+				x = 0
+				foreach pick in gizmo where "PowerInfo.Option"
+					if (x = 0) then
+						options &= eachpick.field[name].text
+					else
+						options &= ", " & eachpick.field[name].text
+					endif
+				nexteach
+			endif
+			if (length(source) <> 0) then
+				txt &= lblsource & source & ". "
+			endif
+			if (length(menu1) <> 0) then
+				if (length(txt) <> 0) then
+					txt &= lblmenu1 & menu1 & ". "
+				else
+					txt &= lblmenu1 & menu1 & ". "
+				endif
+			endif
+			if (length(menu2) <> 0) then
+				if (length(txt) <> 0) then
+					txt &= lblmenu2 & menu2 & ". "
+				else
+					txt &= lblmenu2 & menu2 & ". "
+				endif
+			endif
+			if (length(dom) <> 0) then
+				if (length(txt) <> 0) then
+					txt &= lbldom & dom & ". "
+				else
+					txt &= lbldom & dom & ". "
+				endif
+			endif
+			if (length(options) <> 0) then
+				if (length(txt) <> 0) then
+					txt &= lbloptions & options & ". "
+				else
+					txt &= lbloptions & options & ". "
+				endif
+			endif
+			txt &= extLim
+			if (length(notes) <> 0) then
+				if (length(txt) <> 0) then
+					txt &= lblnotes & notes
+				else
+					txt &= lblnotes & notes
+				endif
+			endif
+			@text = txt
+		]]></labeltext>
+	  </label>
+    </portal>
+	<portal
+      id="username"
+      style="editNormal">
+      <edit
+        field="UserName"
+		placeholdertext="Enter custom power">
+        </edit>
+      </portal>		  
+    <portal
+      id="info"
+      style="actInfo">
+      <action
+        action="info">
+        </action>
+      </portal>
+	  
+    <portal
+      id="delete"
+      style="actDelete"
+      tiptext="Click to delete this Power">
+      <action
+        action="delete">
+        </action>
+      </portal>
+	  
+    <position><![CDATA[
+      ~set up our height based on our tallest portal
+      height = portal[info].height * 3
+
+      ~if this is a "sizing" calculation, we're done
+      doneif (issizing <> 0)
+
+      ~position our tallest portal at the top
+      portal[info].top = 5
+
+
+      ~center the other portals vertically
+      portal[name].top = 5
+      portal[delete].top = 5
+
+      portal[username].top = 5
+      portal[edit].top = 5
+      portal[total].top = 5
+
+      ~position the delete portal on the far right and the info portal next to it
+      perform portal[delete].alignedge[right,0]
+      perform portal[info].alignrel[rtol,delete,-8]
+      perform portal[edit].alignrel[rtol,info,-8]
+      perform portal[total].alignrel[rtol,edit,-8]
+      perform portal[usrsel].alignrel[ttob,name,2]
+
+	  portal[name].width = portal[total].left - 5
+	  
+	  ~if we're a custom item, show the edit portal over the name
+	  if (tagis[Helper.CustomItem] <> 0) then
+		portal[username].left = portal[name].left
+		portal[username].width = 165
+		portal[name].visible = 0
+	  else
+		portal[username].visible = 0
+	  endif
+		
+	~position to extras and limits
+
+	 portal[usrsel].left = portal[name].left
+	 portal[usrsel].width = width
+	 
+	  ~center under name
+	  portal[usrsel].left = 0	 
+	  portal[usrsel].height = height - portal[usrsel].top	 
+      ]]></position>
+
+    </template>
+
+
+	<!-- pwChoice template
+        Displays the name of the pick/thing and an info button with the basic
+        description text. This is basically the "SimpleItem" template, with one
+        key difference. Auto-added powers such as those conferred by races are
+        sorted and colored differently to distinguish their nature.
+  -->
+   <template
+    id="pwChoice"
+    name="Power Choice"
+    compset="Power"
+    marginhorz="1"
+    marginvert="3">
+
+    <portal
+      id="name"
+      style="lblLeft"
+      showinvalid="yes">
+      <label>
+		<labeltext><![CDATA[
+			@text = field[name].text
+		]]></labeltext>
+        </label>
+      </portal>
+
+	 <portal
+      id="type"
+      style="lblSecond">
+      <label>
+        <labeltext><![CDATA[
+		  @text = "{size 30} " & tagnames[PowerType.?]
+		]]></labeltext>
+        </label>
+      </portal> 
+	  
+    <position><![CDATA[
+      ~set up our height based on our tallest portal
+      height = portal[name].height
+
+      ~if this is a "sizing" calculation, we're done
+      doneif (issizing <> 0)
+
+      ~center the other portals vertically
+      portal[type].top = 0
+
+	  ~position the delete portal on the far right
+	  perform portal[type].alignedge[right,0]
+	  
+      ~position the name on the left and make sure its width does not exceed the available space
+      portal[name].left = 0
+      portal[name].width = maximum(portal[name].width,110)
+
+	 ]]></position>
+
+    </template>
+
+
+  <!-- powers layout
+        This layout orchestrates the display of the visual elements that comprise
+        the powers tab. This amounts to a title at the top and a dynamic table
+        below where the user can add the special powers he wants.
+
+        The logic for this layout is similar to (albeit much simpler than) the
+        logic for the Basics tab. So please refer to the Basics tab for more details.
+  -->
+  <layout
+    id="powers">
+    <portalref portal="pwPower" taborder="10"/>
+
+    <!-- This script sizes and positions the layout and its child visual elements. -->
+    <position><![CDATA[
+      ~freeze our table in advancement mode to disable adding new choices
+      ~Note: All freezing must be done *before* any positioning is performed.
+      if (state.iscreate = 0) then
+        portal[pwPower].freeze = 1
+        endif
+
+      ~position and size the table to span the full layout; it will only use the
+      ~vertical space that it actually needs
+      perform portal[pwPower].autoplace
+      ]]></position>
+
+    </layout>
+
+
+  <!-- powers panel
+        This is the "powers" panel shown within Hero Lab. Since we want this
+        panel to appear after Basics and within the traits grouping, we assign it
+        an "order" of 120.
+
+        The logic for this panel is similar to the logic for the Basics panel, so
+        please refer to the Basics panel for more details.
+  -->
+  <panel
+    id="powers"
+    name="Powers"
+    marginhorz="5"
+    marginvert="5"
+    order="130">
+    <live>!HideTab.powers</live>
+    <layoutref layout="powers"/>
+    <position><![CDATA[
+      ]]></position>
+    </panel>
+  </document>

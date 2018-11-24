@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the assortment of miscellaneous things that are required for
+      the game system. Miscellaneous things include the mechanisms for managing applied
+      damage, user images, and personal info for each actor. It also includes things
+      used to track resource pools, such as those used for managing the available
+      attribute points, skill points, etc.
+-->
+
+<document signature="Hero Lab Data">
+
+ 
+  <!-- Power Info -->
+  <thing
+    id="PowerInfo"
+    name="Power Info"
+    compset="PowerInfo"
+    isunique="yes"
+    description="Description goes here">
+    </thing>
+	
+  <!-- Alter Ego Helper -->
+  <thing
+    id="AlterEgo"
+    name="Alter Ego"
+    compset="Simple"
+    isunique="yes"
+    description="Description goes here">
+	<!-- Attach a minion as alter ego -->
+    <minion
+      id="alterego" isinherit="yes">
+
+      </minion>	
+    </thing>  
+	
+  <!-- Energy Form Helper -->
+  <thing
+    id="EnergyForm"
+    name="Energy Form"
+    compset="Simple"
+    isunique="yes"
+    description="Description goes here">
+	<!-- Attach a minion as alter ego -->
+    <minion
+      id="energyform" isinherit="yes">
+		<bootstrap thing="powFlight">
+		</bootstrap>
+		<bootstrap thing="powResist">
+		</bootstrap>
+      </minion>	
+    </thing>  
+	
+  <!-- Explosive Form Helper -->
+  <thing
+    id="ExplosForm"
+    name="Explosive Form"
+    compset="Simple"
+    isunique="yes"
+    description="Description goes here">
+	<!-- Attach a minion as alter ego -->
+    <minion
+      id="explosform" isinherit="yes">
+		<bootstrap thing="powBlast">
+		</bootstrap>
+		<bootstrap thing="powResist">
+		</bootstrap>
+      </minion>	
+    </thing>
+
+  <!-- Power Sources -->
+  <thing
+    id="psArtif"
+    name="Artificial"
+    compset="PowerSrc"
+    isunique="yes"
+    description="The character’s powers were designed, typical for heroes and villains who are artificial life-forms or constructs like robots or androids, or magical creations of alchemy or conjuring.">
+    </thing>
+  <thing
+    id="psBio"
+    name="Biological"
+    compset="PowerSrc"
+    isunique="yes"
+    description="The character’s powers come from biology, either the unusual biology of a non-human species (from aliens to godlike beings from other dimensions) to the genetic quirks of mutations, which can take place any time from conception to later exposure to mutagens like radiation.">
+    </thing>   
+  <thing
+    id="psDevice"
+    name="Device"
+    compset="PowerSrc"
+    isunique="yes"
+    description="Many characters gain some or all of their powers from various devices. See the Devices section for details and additional ideas. Devices can have different power sources themselves, from technology to magic or cosmic energy.">
+    </thing>
+  <thing
+    id="psMagic"
+    name="Magic"
+    compset="PowerSrc"
+    isunique="yes"
+    description="Heroes and villains may be imbued with powers from a magical source (an ancient sorcerer, spell, or artifact) or a magical creature, or may simply have the power to wield magic themselves.">
+    </thing>
+   <thing
+    id="psMental"
+    name="Mental"
+    compset="PowerSrc"
+    isunique="yes"
+    description="The character’s powers are fueled by mental or psionic energies,the unleashed potential of the mind.">
+    </thing>    
+  <thing
+    id="psSkill"
+    name="Skill"
+    compset="PowerSrc"
+    isunique="yes"
+    description="Some gain their powers not by accident, but through hard work and practice. This can include the knowledge and skill to create different devices, mastery of arcane secrets like magic or various psychic powers, or exotic martial arts disciplines controlling one’s own chi or life-force, to name a few. Note that the skill power source is related to the training origin, but is not the same thing: a character might gain mental or magical powers through training, for example.">
+    </thing>
+   <thing
+    id="psTransfer"
+    name="Transfer"
+    compset="PowerSrc"
+    isunique="yes"
+    description="Some are born to power, others have it thrust upon them; many beings and devices can imbue people with powers. Of course, sometimes those same beings can also take away the powers they’ve granted, and such power often comes with a price attached.">
+    </thing>  
+
+	
+	
+ <!-- Damage transaction handler for use when applying damage on the In-Play tab -->
+  <thing
+    id="mscQuality"
+    name="Quality"
+    compset="Quality">
+    </thing>
+
+  <!-- Damage transaction handler for use when applying damage on the In-Play tab -->
+  <thing
+    id="mscDamage"
+    name="Damage"
+    compset="Damage">
+
+    <!-- Automatically add the damage transaction to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+    </thing>
+
+
+  <!-- Personal information details used on the Personal tab -->
+  <thing
+    id="mscPerson"
+    name="Personal"
+    compset="Personal">
+    </thing>
+
+  <!-- Basic user-added image that is managed through the gallery on Personal tab -->
+  <thing
+    id="mscUserImg"
+    name="User Image"
+    compset="UserImage">
+    </thing>
+
+
+  <!-- Character point resource to track the pool of character points being spent -->
+  <thing
+    id="resCP"
+    name="Character Points"
+    compset="Resource">
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Use the starting character points as our initial maximum -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      field[resMax].value = herofield[acStartCP].value
+      ]]></eval>
+    </thing>
+
+
+  <!-- Power slot resource to track the pool of Power slots being spent -->
+  <thing
+    id="resPower"
+    name="Power Slots"
+    compset="Resource">
+    <fieldval field="resObject" value="Power"/>
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Use the starting Power slots as our initial maximum -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      field[resMax].value = herofield[acStartPow].value
+      ]]></eval>
+    </thing>
+
+
+  <!-- Experience points resource to track the pool of XP accrued and spent -->
+  <thing
+    id="resXP"
+    name="Experience Points"
+    compset="Resource">
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Do NOT require this resource to be fully utilized -->
+    <tag group="Helper" tag="NoMinimum"/>
+
+    <!-- Use the starting XP plus the accrued XP as our maximum -->
+    <eval index="1" phase="Setup" priority="1000" name="Calc XP Max"><![CDATA[
+      field[resMax].value = herofield[acStartXP].value + hero.usagepool[TotalXP].value
+      ]]></eval>
+    </thing>
+
+
+  <!-- Advance resource to track the number of advances accrued/spent -->
+  <thing
+    id="resAdvance"
+    name="Advances"
+    compset="Resource"
+    panellink="advances">
+    <fieldval field="resObject" value="Advance"/>
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Base our maximum on the accrued XP -->
+    <eval index="1" phase="Setup" priority="2000">
+      <after name="Calc XP Max"/><![CDATA[
+      field[resMax].value = round(#resmax[resXP] / 20,0,-1)
+      ]]></eval>
+
+    </thing>
+
+
+  <!-- Power points tracker so the user can manage the expenditure of power points -->
+  <thing
+    id="trkPower"
+    name="Power Points"
+    compset="Tracker">
+
+    <!-- Automatically add the tracker to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Resetting the tracker sets the value to the maximum -->
+    <tag group="Helper" tag="ResetMax"/>
+
+    <!-- Use the starting power points as our initial maximum -->
+    <eval index="1" phase="Final" priority="1000"><![CDATA[
+      field[trkMin].value = 0
+      ~field[trkMax].value = #trait[trPowerPts]
+      ]]></eval>
+    </thing>
+
+
+  <!-- Types of characters you might want to build -->
+  <thing
+    id="typHero"
+    name="Type: Hero (PC)"
+    compset="CharType">
+    </thing>
+  <thing
+    id="typNPC"
+    name="Type: Non-Player Character"
+    compset="CharType">
+    </thing>
+
+
+  <!-- NPC Info to display on the NPC info tab - the final "Additional
+      Information" pick can be added multiple times and customised by the user. -->
+  <thing
+    id="npcDesc"
+    name="Description"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="5"/>
+    </thing>
+  <thing
+    id="npcGoals"
+    name="Motivations &amp; Goals"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="10"/>
+    </thing>
+  <thing
+    id="npcSchemes"
+    name="Schemes, Plots &amp; Adventure Hooks"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="15"/>
+    </thing>
+  <thing
+    id="npcTacBef"
+    name="Tactics - Before Combat"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="20"/>
+    </thing>
+  <thing
+    id="npcTacDur"
+    name="Tactics - During Combat"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="25"/>
+    </thing>
+  <thing
+    id="npcMorale"
+    name="Tactics - Morale"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="30"/>
+    </thing>
+  <thing
+    id="npcEnviron"
+    name="Ecology - Environment"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="35"/>
+    </thing>
+  <thing
+    id="npcOrganiz"
+    name="Ecology - Organization"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="40"/>
+    </thing>
+  <thing
+    id="npcTreas"
+    name="Ecology - Treasure"
+    compset="NPCInfo"
+    uniqueness="unique">
+    <tag group="explicit" tag="45"/>
+    </thing>
+  <thing
+    id="npcOther"
+    name="Additional Information"
+    compset="NPCInfo">
+    <tag group="Helper" tag="CustomItem"/>
+    <tag group="explicit" tag="50"/>
+    </thing>
+
+    </document>

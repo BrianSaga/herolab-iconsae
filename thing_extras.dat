@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the assortment of subskills for the game system. Note that each
+      skill is linked to an associated attribute for the character. This linkage allows
+      the value of the skill to easily incorporate the effects of the linked attribute
+      via a script on the component.
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- Affects Others  -->
+  <thing
+    id="exAffOth"
+    name="Affects Others"
+    compset="Extra"
+    isunique="yes"
+    description="You can affect other people with the power, not just yourself.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.-->
+
+	<tag group="OnPower" tag="Any"/>
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+
+      ~adjust the resource appropriately
+	~ 	  var mod as number
+	  
+	~ 	  mod = tagvalue[FCMod.?]
+	~ 	  if (field[usrIsCheck].value <> 0) then
+	~ 		mod += 1
+	~ 		perform delete[FCMod.?]
+	~ 		perform assignstr["FCMod." & mod]
+	~  endif
+	
+      ]]></eval>	
+	  -->
+    </thing>
+
+  <!-- Affects X  -->
+  <thing
+    id="exAffectsX"
+    name="Affects X"
+    compset="Extra"
+    isunique="yes"
+    description="Your power works on a type of target normally immune to it, such as a Blast which Affects Insubstantial targets normally Immune to Physical Damage or Mind Control that Affects Undead, which are often mindless, and so forth.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.-->
+
+	<tag group="OnPower" tag="Any"/>
+	<tag group="User" tag="NeedDomain"/>
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+
+      ~adjust the resource appropriately
+	~ 	  var mod as number
+	  
+	~ 	  mod = tagvalue[FCMod.?]
+	~ 	  if (field[usrIsCheck].value <> 0) then
+	~ 		mod += 1
+	~ 		perform delete[FCMod.?]
+	~ 		perform assignstr["FCMod." & mod]
+	~  endif
+	
+      ]]></eval>	
+	  -->
+    </thing>	
+	
+  <!--Broadcast  -->
+  <thing
+    id="exBroadcas"
+    name="Broadcast"
+    compset="Extra"
+    isunique="yes"
+    description="Your power can affect anyone who sees or hears you (in person or on a television or radio broadcast), giving you a much wider range.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.-->
+
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+
+      ~adjust the resource appropriately
+	~ 	  var mod as number
+	  
+	~ 	  mod = tagvalue[FCMod.?]
+	~ 	  if (field[usrIsCheck].value <> 0) then
+	~ 		mod += 1
+	~ 		perform delete[FCMod.?]
+	~ 		perform assignstr["FCMod." & mod]
+	~  endif
+	
+      ]]></eval>	
+	  -->
+    </thing>
+
+  <!--Burst  -->
+  <thing
+    id="exBurst"
+    name="Burst"
+    compset="Extra"
+    isunique="yes"
+    description="Your power can affect everyone within close distance simultaneously. Roll one test for the power; the different opposing abilities of the targets provide different difficulties (and outcomes).">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.-->
+
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+
+      ~adjust the resource appropriately
+	~ 	  var mod as number
+	  
+	~ 	  mod = tagvalue[FCMod.?]
+	~ 	  if (field[usrIsCheck].value <> 0) then
+	~ 		mod += 1
+	~ 		perform delete[FCMod.?]
+	~ 		perform assignstr["FCMod." & mod]
+	~  endif
+	
+      ]]></eval>	
+	  -->
+    </thing>	
+
+  <!--Contagious  -->
+  <thing
+    id="exCont"
+    name="Contagious"
+    compset="Extra"
+    isunique="yes"
+    description="The effect of your power is 'contagious' and may affect someone else who comes into contact with a target while the power is still in effect. Examples include 'contagious' Afflictions, 'sticky' Bindings, or 'spreading' acid or fire Blasts. The new victim resists the power’s effect normally and also becomes contagious while affected.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.-->
+
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+
+      ~adjust the resource appropriately
+	~ 	  var mod as number
+	  
+	~ 	  mod = tagvalue[FCMod.?]
+	~ 	  if (field[usrIsCheck].value <> 0) then
+	~ 		mod += 1
+	~ 		perform delete[FCMod.?]
+	~ 		perform assignstr["FCMod." & mod]
+	~  endif
+	
+      ]]></eval>	
+	  -->
+    </thing>
+	
+  <!-- Defensive -->
+  <thing
+    id="exDef"
+    name="Defensive"
+    compset="Extra"
+    isunique="yes"
+    description="You can use your power to defend against attacks as a reaction, rolling the power’s level to set the difficulty of the attack.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.-->
+
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+
+      ~adjust the resource appropriately
+	~ 	  var mod as number
+	  
+	~ 	  mod = tagvalue[FCMod.?]
+	~ 	  if (field[usrIsCheck].value <> 0) then
+	~ 		mod += 1
+	~ 		perform delete[FCMod.?]
+	~ 		perform assignstr["FCMod." & mod]
+	~  endif
+	
+      ]]></eval>	
+	  -->
+    </thing>
+	
+  <!-- Effect -->
+  <thing
+    id="exEffect"
+    name="Effect"
+    compset="Extra"
+    isunique="yes"
+    description="Your power can duplicate the effect of another power at its level. This extra is normally listed as the name of a duplicated power, such as 'Flight' or 'Blast.' If it can also duplicate extras of that power, they can be listed along with it. Each requires another extra; essentially, extras of the duplicated power become potential extras of the base power.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.-->
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<fieldval field="usrCandid2" value=" "/>
+	<fieldval field="usrSource1" value="1"/>
+	<fieldval field="usrSource2" value="0"/>
+	
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier -->
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+
+    </thing>
+	
+  <!-- Homing -->
+  <thing
+    id="exHoming"
+    name="Homing"
+    compset="Extra"
+    isunique="yes"
+    description="A ranged power requiring a test to hit the target gets two additional attempts to hit if it initially misses, like a homing missile. Each attempt occurs at the start of your panel. If they both fail, then there is no effect.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<fieldval field="usrCandid2" value=" "/>
+	<fieldval field="usrSource1" value="1"/>
+	<fieldval field="usrSource2" value="0"/>
+	-->
+	
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>	
+	
+  <!-- Level Duration -->
+  <thing
+    id="exLevDur"
+    name="Level Duration"
+    compset="Extra"
+    isunique="yes"
+    description="The effects of your power last for a level duration (see Duration).">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<fieldval field="usrCandid2" value=" "/>
+	<fieldval field="usrSource1" value="1"/>
+	<fieldval field="usrSource2" value="0"/>
+	-->
+	
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+  <!-- Ranged -->
+  <thing
+    id="exRanged"
+    name="Ranged"
+    compset="Extra"
+    isunique="yes"
+    description="You can use a normally close range power out to extended range.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<fieldval field="usrCandid2" value=" "/>
+	<fieldval field="usrSource1" value="1"/>
+	<fieldval field="usrSource2" value="0"/>
+	-->
+	
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+
+	<!-- Rangeless -->
+  <thing
+    id="exRnglss"
+    name="Rangeless"
+    compset="Extra"
+    isunique="yes"
+    description="You can use your power out to any distance, provided you know the location of the target.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<fieldval field="usrCandid2" value=" "/>
+	<fieldval field="usrSource1" value="1"/>
+	<fieldval field="usrSource2" value="0"/>
+	-->
+	
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+
+	<!-- Reversible -->
+  <thing
+    id="exRevers"
+    name="Reversible"
+    compset="Extra"
+    isunique="yes"
+    description="You can reverse the effects of your power, ending them at will, at the same range for using it.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<fieldval field="usrCandid2" value=" "/>
+	<fieldval field="usrSource1" value="1"/>
+	<fieldval field="usrSource2" value="0"/>
+	-->
+	
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Secondary Effect -->
+  <thing
+    id="exSecEff"
+    name="Secondary Effect"
+    compset="Extra"
+    isunique="yes"
+    description="Your power has an additional effect when used, equivalent to that of another power. For example, your Strike power might also be a 'carrier' for a secondary Affliction effect, representing a toxin delivered by the Strike. You can only use the Secondary Effect in conjunction with the first power. A Secondary Effect of the same power adds +1 to the higher power level, like a combined effect (see Combined Effect in The Basics chapter of Icons).">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<fieldval field="usrCandid2" value=" "/>
+	<fieldval field="usrSource1" value="1"/>
+	<fieldval field="usrSource2" value="0"/>
+	-->
+	
+	<tag group="OnPower" tag="Any"/>
+	<tag group="User" tag="NeedDomain"/>
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Slow Recovery -->
+  <thing
+    id="exSlowRec"
+    name="Slow Recovery"
+    compset="Extra"
+    isunique="yes"
+    description="Targets of your power take ten times longer to recover.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<fieldval field="usrCandid2" value=" "/>
+	<fieldval field="usrSource1" value="1"/>
+	<fieldval field="usrSource2" value="0"/>
+	-->
+	
+	<tag group="OnPower" tag="Any"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Boost Two -->
+  <thing
+    id="exBoostTwo"
+    name="Boost Two"
+    compset="Extra"
+    isunique="yes"
+    description="You can boost two abilities at once, using the same guidelines for boosting one. For each additional extra, you can boost an additional ability.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+	<fieldval field="usrCandid1" value="(component.Attribute)"/>
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+	<!-- <fieldval field="usrSource1" value="1"/> -->
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+	
+	<tag group="OnPower" tag="powAbilBst"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Extended -->
+  <thing
+    id="exExtended"
+    name="Extended"
+    compset="Extra"
+    isunique="yes"
+    description="Your boost lasts for as long as you concentrate but, as soon as your concentration lapses, the boost ends and you cannot use it again for a level duration.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+	<!-- <fieldval field="usrCandid1" value="(component.Attribute)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+	<!-- <fieldval field="usrSource1" value="1"/> -->
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+	
+	<tag group="OnPower" tag="powAbilBst"/>
+	<!--<tag group="User" tag="NeedDomain"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Power Boost -->
+  <thing
+    id="exPowerBst"
+    name="Power Boost"
+    compset="Extra"
+    isunique="yes"
+    description="You can boost powers of a particular type or source, such as mutant or magical powers, rather than abilities. This works the same way as boosting abilities.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+	<!-- <fieldval field="usrCandid1" value="(component.Attribute)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+	<!-- <fieldval field="usrSource1" value="1"/> -->
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+	
+	<tag group="OnPower" tag="powAbilBst"/>
+	<tag group="User" tag="NeedDomain"/> 
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Ability Boost -->
+  <thing
+    id="exAbsAb"
+    name="Ability Boost"
+    compset="Extra"
+    isunique="yes"
+    description="On your next panel after absorbing damage, you can use the absorbed energy as an Ability Boost reaction with a level equal to the level absorbed. The affected ability is chosen when you take this option, and each other ability counts as a separate extra.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <fieldval field="usrLabel1" value="Ability: "/>
+	<fieldval field="usrCandid1" value="(component.Attribute)"/> 
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+	<!-- <fieldval field="usrSource1" value="1"/> -->
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+	
+	<tag group="OnPower" tag="powAbsAbi"/>
+	<tag group="OnPower" tag="powAbsHea"/>
+	<tag group="OnPower" tag="powAbsBla"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+	<!-- Ability Boost -->
+  <thing
+    id="exAbsBla"
+    name="Blast"
+    compset="Extra"
+    isunique="yes"
+    description="On your next panel after absorbing damage, you can use the absorbed energy as an Ability Boost reaction with a level equal to the level absorbed. The affected ability is chosen when you take this option, and each other ability counts as a separate extra.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Ability: "/> -->
+	<!-- <fieldval field="usrCandid1" value="(component.Attribute)"/>  -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+	<!-- <fieldval field="usrSource1" value="1"/> -->
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+	
+	<tag group="OnPower" tag="powAbsAbi"/>
+	<tag group="OnPower" tag="powAbsHea"/>
+	<tag group="OnPower" tag="powAbsBla"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>	
+	
+	<!-- Ability Boost -->
+  <thing
+    id="exAbsHea"
+    name="Healing"
+    compset="Extra"
+    isunique="yes"
+    description="On your next panel after absorbing damage, you can use the absorbed energy as an Ability Boost reaction with a level equal to the level absorbed. The affected ability is chosen when you take this option, and each other ability counts as a separate extra.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Ability: "/> -->
+	<!-- <fieldval field="usrCandid1" value="(component.Attribute)"/>  -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+	<!-- <fieldval field="usrSource1" value="1"/> -->
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+	
+	<tag group="OnPower" tag="powAbsAbi"/>
+	<tag group="OnPower" tag="powAbsHea"/>
+	<tag group="OnPower" tag="powAbsBla"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>	
+	
+<!-- Broad -->
+  <thing
+    id="exBroad"
+    name="Broad"
+    compset="Extra"
+    isunique="yes"
+    description="Your Absorption protects against all physical or all energy damage, rather than a specific type.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Ability: "/> -->
+	<!-- <fieldval field="usrCandid1" value="(component.Attribute)"/>  -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+	<!-- <fieldval field="usrSource1" value="1"/> -->
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<fieldval field="usrLabelAr" value="Type:"/>
+	<arrayval field="usrArray" index="0" value="All physical damage"/> 
+	<arrayval field="usrArray" index="1" value="All mental damage"/>
+	
+	<tag group="OnPower" tag="powAbsAbi"/>
+	<tag group="OnPower" tag="powAbsHea"/>
+	<tag group="OnPower" tag="powAbsBla"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Power -->
+  <thing
+    id="exPower"
+    name="Power"
+    compset="Extra"
+    isunique="no"
+    description="Your Absorption protects against all physical or all energy damage, rather than a specific type.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <fieldval field="usrLabel1" value="Power: "/>	
+	<fieldval field="usrCandid1" value="(component.Power)"/>
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="Any"/>
+	<tag group="User" tag="NeedDomain"/> 
+	<tag group="ChooseSrc1" tag="Thing"/>
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Defensive -->
+  <thing
+    id="exDefens"
+    name="Defensive"
+    compset="Extra"
+    isunique="yes"
+    description="An Adaptation test against a threat’s level allows you to adapt to a threat (such as an attack), rather than just a condition. It still takes a full page to adapt (unless you also have the Instant extra). Such willed adaptations last for the chapter, until you adapt to a different danger, or until you are unable to concentrate on them.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAdapt"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Instant -->
+  <thing
+    id="exInstant"
+    name="Instant"
+    compset="Extra"
+    isunique="yes"
+    description="Your body adapts as a reaction, without any preparation, meaning you can even adapt to multiple successive conditions in a single page.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAdapt"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+<!-- Aging -->
+  <thing
+    id="exAging"
+    name="Aging"
+    compset="Extra"
+    isunique="yes"
+    description="You accelerate or reverse the aging process. This adds or subtracts a number of years from the victim’s age equal to the power’s level per degree of success. With two extras, you can both accelerate and reverse aging.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAfflict"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+	<!-- Aura -->
+  <thing
+    id="exAura"
+    name="Aura"
+    compset="Extra"
+    isunique="yes"
+    description="You can afflict anyone who touches you as a reaction in addition to afflicting those you touch.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAfflict"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+
+	<!-- Influence -->
+  <thing
+    id="exInfl"
+    name="Influence"
+    compset="Extra"
+    isunique="yes"
+    description="Rather than inflicting Stamina damage, your Affliction can exert Mind Control over the target at its level.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAfflict"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+
+	<!-- Transformation -->
+  <thing
+    id="exTrans"
+    name="Transformation"
+    compset="Extra"
+    isunique="yes"
+    description="Upon reducing a target to 0 Stamina, your Affliction affects them like the Transformation power.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAfflict"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+
+	<!--Offensive -->
+  <thing
+    id="exOffens"
+    name="Offensive"
+    compset="Extra"
+    isunique="yes"
+    description="Your Alteration Ray has an effect that is more detrimental than beneficial. For Density Ray and Growth Ray, the target does not gain Strength, but still loses Coordination. For Shrinking Ray, the target loses Strength, rather than retaining normal Strength. For a Transforming Ray, the target may lose mental abilities, or only turn into a detrimental form.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAltRay"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+
+	<!--Instant -->
+  <thing
+    id="exInstaCh"
+    name="Instant"
+    compset="Extra"
+    isunique="yes"
+    description="It does not take a page of preparation to assume your Alter Ego, you can do so instantly during your panel.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAltEgo"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+	
+	<!--No Interval -->
+  <thing
+    id="exNoInterv"
+    name="No Interval"
+    compset="Extra"
+    isunique="yes"
+    description="You do not have to revert to your normal form for any time between assuming different serial Alter Egos.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.	-->
+    <!-- <fieldval field="usrLabel1" value="Power: "/>	 -->
+	<!-- <fieldval field="usrCandid1" value="(component.Power)"/> -->
+	<!-- <fieldval field="usrCandid2" value=" "/> -->
+
+	<!-- <fieldval field="usrSource2" value="0"/> -->
+    <!-- If array-based menu selection is needed, make sure the compset includes
+          "UserSelect" component and define these fields as appropriate. -->
+	<!-- <fieldval field="usrLabelAr" value="Type:"/> -->
+	<!-- <arrayval field="usrArray" index="0" value="All physical damage"/>  -->
+	<!-- <arrayval field="usrArray" index="1" value="All mental damage"/> -->
+	
+	<tag group="OnPower" tag="powAltEgo"/>
+	<!-- <tag group="User" tag="NeedDomain"/>  -->
+	<!-- <tag group="ChooseSrc1" tag="Thing"/> -->
+	
+    <!-- Each Bonus must be costed to account for the HP multiplier 
+    <eval index="1" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+		var choices as string
+		if (field[usrChosen1].ischosen <> 0) then
+          choices = field[usrChosen1].chosen.field[usrCandid1].text
+          endif
+		~field[usrCandid2].text = choices
+		field[usrCandid2].text = "(component.Extra)"
+      ]]></eval>	
+	-->
+    </thing>
+</document>

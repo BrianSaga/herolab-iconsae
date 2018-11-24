@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the definitions of components associated with traits such as
+      attributes, skills, special Powers, etc.
+-->
+
+<document signature="Hero Lab Structure">
+
+  <!-- Trait component
+        All traits derive from this component and share these mechanisms in common
+  -->
+  <component
+    id="Trait"
+    name="Trait"
+    autocompset="no"
+    hasshortname="yes"
+    ispublic="no">
+
+    <!-- Abbreviation for use in places like the TacCon -->
+    <field
+      id="trtAbbrev"
+      name="Abbreviation"
+      type="static"
+      maxlength="5">
+      </field>
+
+    <!-- Minimum user-assigned value for the trait -->
+    <field
+      id="trtMinimum"
+      name="Minimum Value"
+      type="derived">
+      </field>
+
+    <!-- Maximum user-assigned value for the trait -->
+    <field
+      id="trtMaximum"
+      name="Maximum Value"
+      type="derived"
+      defvalue="10">
+      </field>
+
+    <!-- User value assigned for the trait -->
+    <field
+      id="trtUser"
+      name="User Value"
+      type="user"
+      usedelta="yes"
+      maxfinal="50">
+      <!-- Bound the user value to the limits established for the trait -->
+      <bound phase="Traits" priority="1000" name="Bound trtUser">
+        <before name="Calc trtFinal"/><![CDATA[
+        @minimum = field[trtMinimum].value
+        @maximum = field[trtMaximum].value
+        ]]></bound>
+      <!-- Final value for display is the fully adjusted net value that incorporates
+            all adjustments from other sources
+      -->
+      <finalize><![CDATA[
+        ~if we're in creation mode and not autonomous, we can't be modified
+        if (hero.tagis[mode.creation] + !autonomous >= 2) then
+          @text = "{bmp forbidden_up}"
+        else
+          @text = field[trtFinal].value
+          endif
+        ]]></finalize>
+      </field>
+
+    <!-- Bonuses applied to the trait (e.g. from other Powers) -->
+    <field
+      id="trtBonus"
+      name="Bonus Value"
+      type="derived">
+      </field>
+
+    <!-- In-play bonuses applied to the trait -->
+    <field
+      id="trtInPlay"
+      name="In-Play Bonus"
+      type="derived">
+      </field>
+
+    <!-- Final value for the trait -->
+    <field
+      id="trtFinal"
+      name="Final Value"
+      type="derived">
+      <!-- Calculate the final value from the three distinct pieces -->
+      <calculate phase="Traits" priority="3000" name="Calc trtFinal"><![CDATA[
+        ~Note! If you change this calculation, you may need to change the similar
+        ~       calculation in the "Derived" component.
+        @value = field[trtUser].value + field[trtBonus].value + field[trtInPlay].value
+        ]]></calculate>
+      </field>
+	  
+	<field
+	  id="trtDisplay"
+	  name="Net Roll to Display"
+	  type="derived"
+	  maxlength="50">
+	  </field>
+
+    <!-- Set the delta for the user value to be the current bonuses
+        NOTE! This is necessary so incrementers have proper values when edited by the user.
+        -->
+    <eval index="1" phase="Render" priority="5000"><![CDATA[
+      field[trtUser].delta = field[trtBonus].value + field[trtInPlay].value
+      ]]></eval>
+
+    <!-- If the trait is at its minimum/maximum, assign a tag to preclude further advancements -->
+    <eval index="2" phase="Final" priority="5000"><![CDATA[
+      ~base our test on the adjusted trait value, sans any in-play adjustments
+      var trait as number
+      trait = field[trtUser].value + field[trtBonus].value
+      if (trait <= field[trtMinimum].value) then
+        perform assign[Helper.Minimum]
+      elseif (trait >= field[trtMaximum].value) then
+        perform assign[Helper.Maximum]
+        endif
+      ]]></eval>
+
+    </component>
+
+
+  <!-- Attribute component
+        Each attribute possessed by the actor derives from this component
+  -->
+  <component
+    id="Attribute"
+    name="Attribute"
+    autocompset="no">
+
+    <!-- Attributes have a minimum trait value of 1 -->
+    <eval index="1" phase="Initialize" priority="3000"><![CDATA[
+      field[trtMinimum].value = 1
+      ]]></eval>
+
+    <!-- Each attribute point above one that is allocated by the user costs 7 CP -->
+    <eval index="2" phase="Traits" priority="10000">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+      hero.child[resCP].field[resSpent].value += (field[trtUser].value - 1) * 7
+      ]]></eval>
+
+    </component>
+
+
+  <!-- Skill component
+        Each skill derives from this component
+  -->
+  <component
+    id="Skill"
+    name="Skill"
+    autocompset="no">
+
+    <!-- Net final roll that includes the value of the linked attribute -->
+    <field
+      id="sklRoll"
+      name="Net Skill Roll"
+      type="derived">
+      <calculate phase="Final" priority="5000">
+        <after name="Calc trtFinal"/><![CDATA[
+        ~only access the linkage if the skill is directly on the hero; if not, it is
+        ~likely within an advancement gizmo and no linkage will exist there
+        if (container.ishero <> 0) then
+          @value = field[trtFinal].value
+          endif
+        ]]></calculate>
+      </field>
+
+    <!-- Each skill is associated with a specific attribute that must be identified -->
+    <linkage linkage="attribute" optional="yes"/>
+
+    <!-- Each skill needs its own identity tag so existing skills can be identified during advancement -->
+    <identity group="Skill"/>
+
+    <!-- Every skill is shown on the "Rolls" mouse-over on the Dashboard/TacCon -->
+    <tag group="DashTacCon" tag="Rolls"/>
+
+    <!-- Track the skill on the actor -->
+    <eval index="1" phase="Initialize" priority="3000"><![CDATA[
+      field[trtMinimum].value = 1
+      field[trtMaximum].value = 3
+      ]]></eval>
+	  
+    <eval index="2" phase="Setup" priority="5000"><![CDATA[
+      perform forward[Skill.?]
+      ]]></eval>
+
+    <!-- Each skill point that is allocated by the user costs 2 CP -->
+    <eval index="3" phase="Traits" priority="10000">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+	  var final as string
+	  
+      ~if this skill is not added directly to the hero (i.e. an advance), skip it entirely
+      doneif (origin.ishero = 0)
+
+      ~adjust the resource appropriately
+      ~hero.child[resCP].field[resSpent].value += field[trtUser].value * 2
+	  
+	  if (field[trtFinal].value = 2) then
+		final = "Expert"
+	  elseif (field[trtFinal].value = 3) then
+		final = "Master"
+	  else
+		final = " "
+		endif
+	  field[trtDisplay].text = final
+      ]]></eval>
+	  
+	  
+    </component>
+
+
+  <!-- Power component
+        Each special Power derives from this component
+  -->
+  <component
+    id="Power"
+    name="Power"
+    autocompset="no"
+	addbehavior="default"
+    panellink="powers">
+
+    <!-- Activation state of Power - we're not activated by default -->
+    <field
+      id="abilActive"
+      name="Is Activated?"
+      type="user"
+      minvalue="0"
+      maxvalue="1">
+      </field>
+
+    <!-- Each Power needs its own identity tag to detect cascading dependencies via prereqs -->
+    <identity group="Power"/>
+
+    <!-- Setup an identity tag group to track all activated Powers and adjustments -->
+    <identity group="Activated"/>
+
+    <!-- All Powers get the same tag for sorting purposes -->
+    <tag group="SpecialTab" tag="Power"/>
+
+    <!-- Track the skill on the actor -->
+    <eval index="1" phase="Initialize" priority="3000"><![CDATA[
+      field[trtMinimum].value = 1
+      field[trtMaximum].value = 10
+      ]]></eval>
+	  
+   <!-- Each Power that is added by the user costs 1 slot -->
+    <eval index="2" phase="Setup" priority="5000"><![CDATA[
+      ~we must ignore bootstrapped Powers from races and Powers added via advances
+      if (isuser + origin.ishero >= 2) then
+        hero.child[resPower].field[resSpent].value += 1
+        endif
+      ]]></eval>
+
+    <!-- Track the Power on the actor -->
+    <eval index="3" phase="Setup" priority="5000"><![CDATA[
+      perform forward[Power.?]
+      ]]></eval>
+
+    <!-- If the Power is activated, designate it appropriately -->
+    <eval index="4" phase="Setup" priority="100"><![CDATA[
+      ~if we're not able to be activated, we don't qualify
+      doneif (tagis[User.Activation] = 0)
+
+      ~if we've been activated by the user, mark ourselves as activated; in addition,
+      ~forward our identity tag to our parent actor; this allows the actor to track
+      ~when Powers are activated and reflect the state to the user
+      if (field[abilActive].value <> 0) then
+        perform assign[Helper.Activated]
+        perform forward[Activated.?]
+        endif
+      ]]></eval>
+
+    <!-- Verify Powers that are only available at creation -->
+    <prereq message="Only available during character creation.">
+      <validate><![CDATA[
+        ~we only report this as a failure things (once added, we assume the user knows best)
+        validif (@ispick <> 0)
+
+        ~if we are not designated as creation only, we're valid
+        validif (altthing.tagis[User.CreateOnly] = 0)
+
+        ~if the mode is creation, we're valid
+        validif (state.iscreate <> 0)
+        ]]></validate>
+      </prereq>
+
+    </component>
+
+  <!-- Quality component
+        Each special Power derives from this component
+  -->
+  <component
+    id="Quality"
+    name="Quality"
+    autocompset="no">
+
+    <!-- Activation state of Power - we're not activated by default -->
+    <field
+      id="qualActive"
+      name="Is Activated?"
+      type="user"
+      minvalue="0"
+      maxvalue="1">
+      </field>
+	  
+    <!-- Activation state of Power - we're not activated by default -->
+    <field
+      id="qualTrouble"
+      name="Is Trouble?"
+      type="user"
+      minvalue="0"
+      maxvalue="1">
+      </field>
+
+    <!-- Each Power needs its own identity tag to detect cascading dependencies via prereqs -->
+    <identity group="Quality"/>
+
+    <!-- Setup an identity tag group to track all activated Powers and adjustments -->
+    <identity group="Activated"/>
+
+
+    <!-- Each Power that is added by the user costs 1 slot -->
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~we must ignore bootstrapped Powers from races and Powers added via advances
+      if (isuser + origin.ishero >= 2) then
+        hero.child[resPower].field[resSpent].value += 1
+        endif
+      ]]></eval>
+
+    <!-- Track the Power on the actor -->
+    <eval index="2" phase="Setup" priority="5000"><![CDATA[
+      perform forward[Power.?]
+      ]]></eval>
+
+    <!-- If the Power is activated, designate it appropriately -->
+    <eval index="3" phase="Setup" priority="100"><![CDATA[
+      ~if we're not able to be activated, we don't qualify
+      doneif (tagis[User.Activation] = 0)
+
+      ~if we've been activated by the user, mark ourselves as activated; in addition,
+      ~forward our identity tag to our parent actor; this allows the actor to track
+      ~when Powers are activated and reflect the state to the user
+      if (field[abilActive].value <> 0) then
+        perform assign[Helper.Activated]
+        perform forward[Activated.?]
+        endif
+      ]]></eval>
+
+    <!-- Verify Powers that are only available at creation -->
+    <prereq message="Only available during character creation.">
+      <validate><![CDATA[
+        ~we only report this as a failure things (once added, we assume the user knows best)
+        validif (@ispick <> 0)
+
+        ~if we are not designated as creation only, we're valid
+        validif (altthing.tagis[User.CreateOnly] = 0)
+
+        ~if the mode is creation, we're valid
+        validif (state.iscreate <> 0)
+        ]]></validate>
+      </prereq>
+
+    </component>
+	
+  <!-- Derived component
+        Each derived trait (calculated from other traits) is based upon this component
+  -->
+  <component
+    id="Derived"
+    name="Derived Trait"
+    autocompset="no">
+
+    <!-- Derived traits are based on other traits. The "calculate" script on the
+        "trtFinal" field value will work great for most traits, but NOT for derived
+        traits. Consequently, derived traits need to re-calculate the field value AFTER
+        the traits derived from are properly calculated. So the individual calculation
+        scripts for each derived trait must occur AFTER the initial "trtFinal"
+        calculation and BEFORE this derived calculation. We can also omit any "user"
+        value from the calculation since derived traits have no user-defined facet.
+        -->
+    <eval index="1" phase="Traits" priority="6000" name="Derived trtFinal"><![CDATA[
+      field[trtFinal].value = field[trtBonus].value + field[trtInPlay].value
+      ]]></eval>
+
+    </component>
+
+
+  <!-- Race component
+        Each race derives from this component
+  -->
+  <component
+    id="Race"
+    name="Race"
+    autocompset="no">
+
+    <!-- Each race needs its own identity tag to configure the hero appropriately -->
+    <identity group="Race"/>
+
+    <!-- Track the race on the actor by assigning the appropriate tag -->
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      perform forward[Race.?]
+      ]]></eval>
+
+    </component>
+
+<!-- Bonus component
+        Used for tracking Bonuses on Powers
+  -->
+  <component
+    id="Extra"
+    name="Extra"
+    autocompset="no"
+    hasshortname="yes"
+	ispublic="yes">
+	  
+	<identity group="Extra"/>
+ 
+    <!-- Assign the tag to the container -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      perform forward[Extra.?,parent]
+      ]]></eval>
+
+    <!-- Each Bonus must be costed to account for the HP multiplier -->
+    <eval index="2" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+	]]></eval>	  
+    </component>
+
+  <!-- Limitation component
+        Used for tracking Limitation on Powers
+  -->
+  <component
+    id="Limit"
+    name="Limit"
+    autocompset="no"
+    hasshortname="yes"
+	ispublic="yes">
+	  
+	<identity group="Limit"/>
+ 
+    <!-- Assign the tag to the container -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      perform forward[Limit.?,parent]
+      ]]></eval>	
+	  
+    <!-- Each Bonus must be costed to account for the HP multiplier -->
+    <eval index="2" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+      ]]></eval>	  
+    </component>  
+	
+<!-- Power Source component
+        Used for picking sources on Powers
+  -->
+  <component
+    id="PowerSrc"
+    name="Power Source"
+    autocompset="yes"
+    hasshortname="yes"
+	ispublic="yes">
+	  
+	<identity group="PowerSrc"/>
+ 
+    <!-- Assign the tag to the container -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      perform forward[PowerSrc.?,parent]
+      ]]></eval>	
+	  
+    <!-- Each Bonus must be costed to account for the HP multiplier -->
+    <eval index="2" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+      ]]></eval>	  
+    </component>
+	
+<!-- Power Option component
+        Used for picking options on Powers
+  -->
+  <component
+    id="PowerOpt"
+    name="Power Option"
+    autocompset="yes"
+    hasshortname="yes"
+	ispublic="yes">
+	  
+	<identity group="PowerOpt"/>
+ 
+    <!-- Assign the tag to the container -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      perform forward[PowerOpt.?,parent]
+      ]]></eval>	
+	  
+    <!-- Each Bonus must be costed to account for the HP multiplier -->
+    <eval index="2" phase="Traits" priority="1500">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+      ]]></eval>	  
+    </component>
+	
+	
+  <!-- Power Source component
+        Used for tracking Sources on Powers
+  -->
+  <component
+    id="PowSource"
+    name="Power Source Tracker"
+    autocompset="yes"
+    hasshortname="yes"
+	ispublic="yes">
+	
+    <!--  Label associated with the first thing-based menu -->
+    <field
+      id="srcLabel"
+      name="Thing source Label"
+      type="derived"
+      maxlength="50">
+      </field>
+
+    <!-- Tracks the first selection made when a menu choice is required -->
+    <field
+      id="srcChosen"
+      name="Chosen Thing / Pick #1"
+      type="user"
+      style="menu">
+      </field>
+
+    <!-- Candidate tagexpr used to determine which picks/things are shown in menu #1
+          NOTE! If this field is empty, it means NO first menu is shown for the pick.
+    -->
+    <field
+      id="powSrcExp"
+      name="Candidate TagExpr"
+      type="derived"
+      maxlength="1000"
+      defvalue="">
+      </field>
+
+    <!-- Source to pull choices from within menu #1 -->
+    <field
+      id="srcSource"
+      name="Source for Source menu Choices"
+      type="derived">
+      <!-- Determine the source to choose from based on the tag, defaulting to "Hero" -->
+      <calculate phase="Render" priority="10000"><![CDATA[
+        if (tagis[srcSource.Thing] <> 0) then
+          @value = 0
+        elseif (tagis[srcSource.Container] <> 0) then
+          @value = 1
+        elseif (tagis[srcSource.Hero] <> 0) then
+          @value = 2
+        else
+          @value = 0
+          endif
+        ]]></calculate>
+      </field>
+
+	<identity group="PowSource"/>
+ 
+    <!-- Assign the tag to the container -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      perform forward[PowSource.?,parent]
+      ]]></eval>	
+	  	  
+    </component>
+	
+	<!-- Power Info component
+        Used for tracking modifiers on powers
+  -->
+  <component
+    id="PowerInfo"
+    name="Power Info"
+    autocompset="no"
+	ispublic="no">
+
+    <!-- Tag applied when picked -->
+    <field
+      id="powTagExp"
+      name="Tag Expression"
+      type="derived"
+      maxlength="200">
+      </field>
+
+    <!-- Tag applied when power options picked -->
+    <field
+      id="powOptExp1"
+      name="Tag Expression"
+      type="derived"
+      maxlength="200">
+      </field>   
+
+	  <!-- Tag applied when power options picked -->
+    <field
+      id="powOptExp2"
+      name="Tag Expression"
+      type="derived"
+      maxlength="200">
+      </field>	
+
+	  <!-- Tag applied when power options picked -->
+    <field
+      id="powOptExp3"
+      name="Tag Expression"
+      type="derived"
+      maxlength="200">
+      </field>
+	
+
+    <!-- Option state of Power - we're not activated by default -->
+    <field
+      id="piCheck1"
+      name="Option Checkbox 1"
+      type="user"
+      minvalue="0"
+      maxvalue="1">
+
+      </field>
+
+	  <!-- Option state of Power - we're not activated by default -->
+    <field
+      id="piCheck2"
+      name="Option Checkbox 2"
+      type="user"
+      minvalue="0"
+      maxvalue="1">
+
+      </field>
+
+	  <!-- Option state of Power - we're not activated by default -->
+    <field
+      id="piCheck3"
+      name="Option Checkbox 3"
+      type="user"
+      minvalue="0"
+      maxvalue="1">
+
+      </field>
+	  
+    <field
+      id="piChkText1"
+      name="Checkbox Text 1"
+      type="derived"
+      maxlength="100">
+      </field>
+
+    <field
+      id="piChkText2"
+      name="Checkbox Text 2"
+      type="derived"
+      maxlength="100">
+      </field>
+	  
+    <field
+      id="piChkText3"
+      name="Checkbox Text 3"
+      type="derived"
+      maxlength="100">
+      </field>
+	  
+    <field
+      id="powNotes"
+      name="Notes"
+      type="user"
+      maxlength="1000">
+      </field>
+
+    <!-- Track the skill on the actor -->
+    <eval index="1" phase="Initialize" priority="3000"><![CDATA[
+      field[trtMinimum].value = 1
+      field[trtMaximum].value = 10
+
+      ]]></eval>
+	  
+    <!-- Build to candidate tag expression -->
+    <eval index="2" phase="Setup" priority="1000"><![CDATA[
+      if (parent.isgizmo <> 0) then
+		~set our candidate field for aoe selection
+		field[powTagExp].text = "OnPower.Any | OnPower." & parent.idstring
+		
+		~set livename to parent name
+		if (field[UserName].isempty <> 0) then
+			trustme
+			field[UserName].text = parent.field[name].text
+		endif
+	  endif
+      ]]></eval>	
+
+    <eval index="3" phase="Traits" priority="1000"><![CDATA[
+
+      ~parent.field[lnkLinked].value = field[powLinked].value
+	  parent.field[livename].text = field[UserName].text
+	  parent.field[trtFinal].value = field[trtUser].value
+      ]]></eval>	
+
+    <eval index="4" phase="Render" priority="1000"><![CDATA[
+
+	  ~parent.field[lnkLinked].value = field[powLinked].value
+	  parent.field[livename].text = field[UserName].text
+	  parent.field[trtFinal].value = field[trtUser].value
+      ]]></eval>		  
+
+    </component>
+	
+  <!-- Define various component sets associated with the components defined above.
+  -->
+
+  <!-- No compsets are auto-defined for the component -->
+
+  <!-- Attribute - all attributes derive from this compset -->
+  <compset
+    id="Attribute"
+    forceunique="yes">
+    <compref component="Attribute"/>
+    <compref component="Trait"/>
+    <compref component="CanAdvance"/>
+    </compset>
+
+  <!-- Skill - all skills derive from this compset -->
+  <compset
+    id="Skill"
+    forceunique="yes">
+    <compref component="Skill"/>
+    <compref component="Trait"/>
+    <compref component="Custom"/>
+    <compref component="Domain"/>
+    <compref component="CanAdvance"/>
+    </compset>
+
+  <!-- Power - all Powers derive from this compset -->
+  <compset
+    id="Power">
+    <compref component="Power"/>
+    <compref component="Trait"/>
+    <compref component="SpecialTab"/>
+    <compref component="CanAdvance"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    <compref component="UserSelect"/>
+    </compset>
+	
+  <!-- Quality - all Powers derive from this compset -->
+  <compset
+    id="Quality">
+    <compref component="Quality"/>
+    <compref component="Trait"/>
+    <compref component="Custom"/>
+    </compset>
+
+  <!-- Trait - all derived traits are based on this compset -->
+  <compset
+    id="Trait">
+    <compref component="Derived"/>
+    <compref component="Trait"/>
+    </compset>
+
+  <!-- Race - all races derive from this compset -->
+  <compset
+    id="Race"
+    forceunique="yes">
+    <compref component="Race"/>
+    </compset>
+
+  <!-- Bonus - all bonuses derive from this compset -->
+  <compset
+    id="Extra">
+    <compref component="Extra"/>
+    <compref component="Trait"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    <compref component="UserSelect"/>
+    </compset>
+
+  <!-- Limitation - all limitations derive from this compset -->
+  <compset
+    id="Limit">
+    <compref component="Limit"/>
+    <compref component="Trait"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    <compref component="UserSelect"/>
+    </compset>
+	
+  <compset
+    id="PowerInfo">
+    <compref component="PowerInfo"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>    
+	<compref component="Trait"/>
+    <compref component="UserSelect"/>
+    <compref component="PowSource"/>
+    </compset>
+	
+  <!-- Entity for bonuses and limitations -->
+   <entity
+	  id="entMod"
+	  defaultthing="PowerInfo"
+	  form="power">
+	  <!-- <bootstrap thing="PowerInfo"/> -->
+	</entity>	
+  </document>
