@@ -20,8 +20,8 @@
   <name name="Calc resLeft" full="Field resLeft: Calc resLeft"/>
   <name name="Calc trkLeft" full="Field trkLeft: Calc trkLeft"/>
   <name name="Calc trtFinal" full="Field trtFinal: Calc trtFinal"/>
-  <name name="Calc wpNetAtk" full="Component WeapRange: Calc wpNetAtk"/>
   <name name="Calc wpNetAtk" full="Component WeapMelee: Calc wpNetAtk"/>
+  <name name="Calc wpNetAtk" full="Component WeapRange: Calc wpNetAtk"/>
   <name name="Derived trtFinal" full="Component Derived: Derived trtFinal"/>
   <name name="Equip Armor" full="Component Armor: Equip Armor"/>
   <name name="Equip Shield" full="Component Shield: Equip Shield"/>
@@ -38,22 +38,22 @@
     <before name="Field trtFinal: Calc trtFinal" phase="Traits" priority="3000"/>
     </depends>
   <depends name="Thing adjCP: Eval Script #1" phase="Setup" priority="8000">
-    <before name="Component WeapRange: Calc wpNetAtk" phase="Final" priority="7000"/>
+    <before name="Component WeapMelee: Calc wpNetAtk" phase="Final" priority="7000"/>
     </depends>
   <depends name="Thing adjDP: Eval Script #1" phase="Setup" priority="8000">
-    <before name="Component WeapRange: Calc wpNetAtk" phase="Final" priority="7000"/>
+    <before name="Component WeapMelee: Calc wpNetAtk" phase="Final" priority="7000"/>
     </depends>
   <depends name="Thing adjDerived: Eval Script #1" phase="Setup" priority="8000">
     <before name="Field trtFinal: Calc trtFinal" phase="Traits" priority="3000"/>
     </depends>
   <depends name="Thing adjPower: Eval Script #1" phase="Setup" priority="8000">
-    <before name="Component WeapRange: Calc wpNetAtk" phase="Final" priority="7000"/>
+    <before name="Component WeapMelee: Calc wpNetAtk" phase="Final" priority="7000"/>
     </depends>
   <depends name="Thing adjSkill: Eval Script #1" phase="Setup" priority="8000">
     <before name="Field trtFinal: Calc trtFinal" phase="Traits" priority="3000"/>
     </depends>
   <depends name="Thing adjWeapon: Eval Script #1" phase="Setup" priority="8000">
-    <before name="Component WeapRange: Calc wpNetAtk" phase="Final" priority="7000"/>
+    <before name="Component WeapMelee: Calc wpNetAtk" phase="Final" priority="7000"/>
     </depends>
   <depends name="Component Defense: Eval Script #2" phase="Pre-Traits" priority="5000">
     <before name="Field trtFinal: Calc trtFinal" phase="Traits" priority="3000"/>
@@ -180,6 +180,8 @@
       </priority>
     <priority priority="1000">
       <task name="Thing resXP: Calc XP Max">
+        </task>
+      <task name="Component DisHelper: Eval Script #1">
         </task>
       <task name="Component Extra: Eval Script #1">
         </task>
@@ -383,7 +385,7 @@
         </task>
       </priority>
     <priority priority="7000">
-      <task name="Component WeapRange: Calc wpNetAtk">
+      <task name="Component WeapMelee: Calc wpNetAtk">
         </task>
       </priority>
     <priority priority="10000">

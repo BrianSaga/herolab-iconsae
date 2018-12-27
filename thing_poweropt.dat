@@ -268,8 +268,13 @@
 
 	<tag group="OnPower" tag="powAltForm"/>
 	
-	<bootstrap thing="EnergyForm">
+	<bootstrap thing="disFlight">
+		<assignval field="livename" value="Energy Form: Flight"/>
 	</bootstrap>
+	<bootstrap thing="disResist">
+		<assignval field="livename" value="Energy Form: Resistance"/>
+	</bootstrap>
+
     </thing>	
 	
 	<!-- Alt Form EXPLOSIVE FORM Option  -->
@@ -284,7 +289,31 @@
 
 	<tag group="OnPower" tag="powAltForm"/>
 	
-	<bootstrap thing="ExplosForm">
+	<bootstrap thing="disBlast">
+		<assignval field="livename" value="Explosive Form: Blast"/>
+	</bootstrap>
+	<bootstrap thing="disResist">
+		<assignval field="livename" value="Explosive Form: Resistance"/>
+	</bootstrap>
+    </thing>	
+	
+	<!-- Alt Form FLUID FORM  FORM Option  -->
+  <thing
+    id="optFluid"
+    name="Fluid Form"
+    compset="PowerOpt"
+    isunique="yes"
+    description="You transform into a fluid form, able to flow like water through cracks and other small spaces. You might be a liquid like water or a mass of fine particles like dust or sand, or tiny insects or robots. You gain Damage Resistance and Stretching equal to your power level.">
+    <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.-->
+
+	<tag group="OnPower" tag="powAltForm"/>
+	
+	<bootstrap thing="disBlast">
+		<assignval field="livename" value="Explosive Form: Blast"/>
+	</bootstrap>
+	<bootstrap thing="disResist">
+		<assignval field="livename" value="Explosive Form: Resistance"/>
 	</bootstrap>
     </thing>
 

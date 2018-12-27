@@ -566,6 +566,29 @@
       perform forward[PowSource.?,parent]
       ]]></eval>	
 	  	  
+    </component>  
+	
+	<!-- Displacement component
+        Displacement to hero
+  -->
+  <component
+    id="DisHelper"
+    name="Displacement"
+    autocompset="no"
+    hasshortname="yes"
+	ispublic="no">
+	
+
+	<identity group="DisHelper"/>
+	
+     <!-- All dishelpers need to displace themselves to the hero -->
+    <displace target="hero">Helper.Displace</displace>
+	    <tag group="Helper" tag="Displace"/>
+    <!-- Assign the tag to the container -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+      perform forward[DisHelper.?,parent]
+      ]]></eval>	
+	  	  
     </component>
 	
 	<!-- Power Info component
@@ -739,6 +762,18 @@
     <compref component="CanAdvance"/>
     <compref component="Domain"/>
     <compref component="Custom"/>
+    <compref component="UserSelect"/>
+    </compset>  
+	
+	<!-- AddOnPower - all Powers derive from this compset -->
+  <compset
+    id="AddOnPower">
+    <compref component="Power"/>
+    <compref component="Trait"/>
+    <compref component="SpecialTab"/>
+    <compref component="Domain"/>
+    <compref component="Custom"/>
+    <compref component="DisHelper"/>
     <compref component="UserSelect"/>
     </compset>
 	

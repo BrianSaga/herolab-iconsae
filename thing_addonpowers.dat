@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the assortment of special Powers for the game system.
+      Powers confer their effects through scripts that apply the necessary changes
+      to the appropriate traits.
+
+      Powers influence traits, so all adjustments must be applied prior to when the
+      final trait value is calculated. The script timing used below (PreTraits/5000)
+      ensures that we satisfy this requirement. All Powers should be designated as
+      "unique" so that they can only be selected a single time by the user.
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- Power BOOST Power -->
+  <thing
+    id="disAbilBst"
+    name="Ability Boost"
+    compset="AddOnPower"
+    isunique="no"
+    description="Ability Boost temporarily increases one ability, chosen when the power is acquired, making it a power group of six powers, one for each ability: Prowess Boost, Coordination Boost, Strength Boost, and so forth. Choose an ability. You can boost the chosen ability’s level up to the power level for a level duration. Then the ability’s level is reduced to one lower than its normal level for the same duration while it 'recovers.'\n\nExample: Strength Boost 8 raises your Strength level to 8 for 8 pages, then your Strength drops to 1 less than its normal level for 8 pages while you recover.\n\nIf you boost a level 0 ability, such as a power you don’t normally have, then it drops back to level 0 while it recovers, making it unusable during that time.\n\nWhen you determine the level for this power, any rolled result equal to or less than your existing ability level should be re-rolled until you get a higher level. Level 10 abilities cannot be boosted; choose or roll a different ability. Ability Boost only counts as a power for figuring Determination if its level is 7 or greater.">
+    <fieldval field="trtAbbrev" value="AbBst"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+	<!-- Tags describe our skill in game terms -->		
+
+	<tag group="PowerType" tag="Alteration"/>
+
+	
+	
+    </thing>
+	
+<!-- Ability Increase Power -->
+  <thing
+    id="disAbilInc"
+    name="Ability Increase"
+    compset="AddOnPower"
+    isunique="no"
+    description="Alteration. This power permanently increases one of the character’s abilities (an attribute or power) to the rolled level or by +2 (to a maximum of 10), whichever is greater. It does not count towards Determination, but an increased attribute may do so, if it is 7 or greater. Select an ability.">
+    <fieldval field="trtAbbrev" value="AbInc"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+	<!-- Tags describe our skill in game terms -->		
+
+	<tag group="PowerType" tag="Alteration"/>
+
+	
+    <!-- Specify the attribute to which this skill is linked 
+    <link linkage="powAttr" thing="attrBod"/>
+	-->
+	
+    </thing>
+	
+<!-- ABSORPTION Power -->
+  <thing
+    id="disAbsAbi"
+    name="Absorption"
+    compset="AddOnPower"
+    isunique="yes"
+    description="You can absorb a particular type of attack, such as kinetic impact or a type of energy (see Energy Control for examples). So you might have Impact Absorption (blunt damage), Fire Absorption, Radiation Absorption, and so forth. Subtract your Absorption power level from the attack’s level. If this reduces the attack’s level to 0 or less, it has no effect on you. Any remaining levels of the attack affect you normally; apply any Resistance to the remaining level (see Resistance, p. 106). Choose one of Ability Boost, Blast, or Healing you can power with your absorbed energy. You can acquire the others as regular extras.">
+    <fieldval field="trtAbbrev" value="Absor"/>
+
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+	<!-- Tags describe our skill in game terms -->	
+	<tag group="PowerType" tag="Defensive"/>
+	<tag group="InPlay" tag="TempOK"/>
+
+		
+    </thing>
+	
+<!-- Adaptation Power -->
+  <thing
+    id="disAdapt"
+    name="Adaptation"
+    compset="AddOnPower"
+    isunique="yes"
+    description="Adaptation allows you to transform to adapt to hostile environments. After a page of preparation, physical aspects such as appearance, skin, lung capacity, and resistance to natural damage sources change. You can adapt higher Strength to handle an alien planet’s gravity or Life Support to breathe methane, for example. The power adapts to conditions, not threats; you can’t grow wings if you’re pushed off a cliff, but you can grow gills and become Aquatic when plunged into water. Similarly, you gain no resistance to attacks, but can gain Heat Resistance in the domain of the Lava Men. Maximum benefits are at your Adaptation power level and last as long as you are exposed to the condition. The Game Master may rule on exactly what powers your adapt to overcome a condition, and what conditions or threats are affected by your power.">
+    <fieldval field="trtAbbrev" value="Adapt"/>
+	<!-- <fieldval field="usrCandid1" value="(component.Attribute)"/> -->
+	
+	 <!-- If checkbox selection is needed, make sure the compset includes "UserSelect"
+          component and define this field appropriately.
+    <fieldval field="usrChkText" value="Menu1"/>
+    -->
+
+	<!-- Tags describe our skill in game terms -->		
+
+	<tag group="PowerType" tag="Defensive"/>
+    <!-- <tag group="DashTacCon" tag="NonCombat"/> -->
+
+	
+    </thing>
+	
+<!-- Blast Power -->
+  <thing
+    id="disBlast"
+    name="Blast"
+    compset="AddOnPower"
+    isunique="yes"
+    description="">
+    <fieldval field="trtAbbrev" value="Blast"/>
+
+	<tag group="PowerType" tag="Offensive"/>
+	
+    </thing>
+	
+<!-- Healing Power -->
+  <thing
+    id="disHeal"
+    name="Healing"
+    compset="AddOnPower"
+    isunique="yes"
+    description="">
+    <fieldval field="trtAbbrev" value="Heal"/>
+	<!-- Tags describe our skill in game terms -->		
+
+	<tag group="PowerType" tag="Offensive"/>
+    <!-- <tag group="DashTacCon" tag="NonCombat"/> -->
+	<!-- <tag group="InPlay" tag="TempOK"/> -->
+
+	
+    </thing>
+	
+<!-- Affliction Power -->
+  <thing
+    id="disAfflict"
+    name="Affliction"
+    compset="AddOnPower"
+    isunique="yes"
+    description="Offensive. You cause a fast-acting affliction—like a disease or toxin—by touching a target. Make a Prowess test to touch your target, then an Affliction test against the higher of the target’s Strength or Regeneration level: Massive or major failure means no effect and ends any ongoing Affliction effect.{br} Moderate failure means no effect on this page, but the Affliction continues and another test is required on the following page, at the start of your panel. Marginal success inflicts half the Affliction’s level as Stamina damage, ignoring Damage Resistance, and the Affliction continues, as above. Moderate success or better inflicts the Affliction’s level as Stamina damage, ignoring Damage Resistance, and the Affliction, continues, as above.{br} Choose whether your Affliction causes a target reduced to 0 Stamina to remain unconscious (like a major stunning outcome) or begin losing Strength levels (like a major killing outcome).">
+    <fieldval field="trtAbbrev" value="Affli"/>
+	<tag group="PowerType" tag="Defensive"/>
+    <!-- <tag group="DashTacCon" tag="NonCombat"/> -->
+	<!-- <tag group="InPlay" tag="TempOK"/> -->
+	
+    </thing>
+	
+<!-- Alteration Ray Power -->
+  <thing
+    id="disAltRay"
+    name="Alteration Ray"
+    compset="AddOnPower"
+    isunique="no"
+    description="This power group is made up of Alteration Powers you can use on others at extended range rather than on yourself. Choose one of the options from the following list. ">
+    <fieldval field="trtAbbrev" value="AltRy"/>
+
+	<tag group="PowerType" tag="Control"/>
+
+	<!-- <tag group="User" tag="NeedDomain"/> -->
+	
+    </thing>
+	
+<!-- Air Control Power -->
+  <thing
+    id="disAirCont"
+    name="Air Control"
+    compset="AddOnPower"
+    isunique="yes"
+    description="You manipulate air and wind, creating winds of power level Strength for purposes of moving objects (see the Benchmark Table for guidelines of how much weight you can move).">
+    <fieldval field="trtAbbrev" value="AirCo"/>
+
+	<tag group="PowerType" tag="Control"/>
+
+	<!-- <tag group="User" tag="NeedDomain"/> -->
+
+	
+    </thing>
+	
+ 
+
+ 
+	
+ <!-- Alternate Form -->
+  <thing
+    id="disAltForm"
+    name="Alternate Form"
+    compset="AddOnPower"
+    isunique="no"
+    description="You can transform into a form other than flesh and blood. It takes a page of preparation for you to change into your Alternate Form, but you can change back to normal instantly. Depending on the form and Game Master approval, you can use the level of this power to determine damage when attacking in close combat (punching with fists of steel, igniting things while made of fire, suffocating with gas or water, burning with acid, etc.).{br}{br}Each kind of Alternate Form is itself a power group, so you have Electrical Form, Fire Form, Gaseous Form, Metal Form, Water Form, and so forth, as the individual powers.">
+    <fieldval field="trtAbbrev" value="AltFm"/>
+
+	<tag group="PowerType" tag="Alteration"/>
+
+
+
+    </thing> 
+	
+	<!-- Flight Power -->
+  <thing
+    id="disFlight"
+    name="Flight"
+    compset="AddOnPower"
+    isunique="yes"
+    description="You can transform into a form other than flesh and blood. It takes a page of preparation for you to change into your Alternate Form, but you can change back to normal instantly. Depending on the form and Game Master approval, you can use the level of this power to determine damage when attacking in close combat (punching with fists of steel, igniting things while made of fire, suffocating with gas or water, burning with acid, etc.).{br}{br}Each kind of Alternate Form is itself a power group, so you have Electrical Form, Fire Form, Gaseous Form, Metal Form, Water Form, and so forth, as the individual powers.">
+    <fieldval field="trtAbbrev" value="Fly"/>
+
+	<tag group="PowerType" tag="Movement"/>
+
+
+
+    </thing>
+
+	<!-- Resistance Power -->
+  <thing
+    id="disResist"
+    name="Resistance"
+    compset="AddOnPower"
+    isunique="yes"
+    description="You can resist a particular type of effect. Choose one of the following: Ability (Affliction, Energy Drain, and related effects), Alteration, Binding, Damage, Detection, Mental, Sensory, or develop your own resistance with the Game Master’s permission. Subtract your Resistance level from the level of any such effect used on you. If the effect’s level is reduced to 0 or less, it doesn’t work on you. If you have level 10 Resistance, you are essentially immune to that effect, although level 10 attacks can still potentially achieve slam, stun, or kill outcomes against you. You can ignore even those at this level by spending a Determination Point.">
+    <fieldval field="trtAbbrev" value="Resis"/>
+
+	<tag group="PowerType" tag="Defensive"/>
+
+
+    </thing>
+  </document>

@@ -57,7 +57,7 @@
 	  showsortset="PowerSort"
 	  choosesortset="PowerSort"
       addpick="resCP">
-      <candidate>!Hide.Power</candidate>
+      <candidate>!Hide.Power &amp; !component.DisHelper</candidate>
       <titlebar><![CDATA[
         @text = "Add a Power - " & hero.child[resCP].field[resShort].text
         ]]></titlebar>
@@ -337,7 +337,15 @@
 	 
 	  ~center under name
 	  portal[usrsel].left = 0	 
-	  portal[usrsel].height = height - portal[usrsel].top	 
+	  portal[usrsel].height = height - portal[usrsel].top
+	  
+      ~if the ability is auto-added, change its font to indicate that fact
+      if (candelete = 0) then
+        perform portal[name].setstyle[lblAuto]
+        portal[total].visible = 0
+	  else
+        perform portal[name].setstyle[lblNormal]		
+        endif	  
       ]]></position>
 
     </template>

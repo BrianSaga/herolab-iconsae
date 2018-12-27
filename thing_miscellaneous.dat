@@ -33,39 +33,9 @@
       </minion>	
     </thing>  
 	
-  <!-- Energy Form Helper -->
-  <thing
-    id="EnergyForm"
-    name="Energy Form"
-    compset="Simple"
-    isunique="yes"
-    description="Description goes here">
-	<!-- Attach a minion as alter ego -->
-    <minion
-      id="energyform" isinherit="yes">
-		<bootstrap thing="powFlight">
-		</bootstrap>
-		<bootstrap thing="powResist">
-		</bootstrap>
-      </minion>	
-    </thing>  
+ 
 	
-  <!-- Explosive Form Helper -->
-  <thing
-    id="ExplosForm"
-    name="Explosive Form"
-    compset="Simple"
-    isunique="yes"
-    description="Description goes here">
-	<!-- Attach a minion as alter ego -->
-    <minion
-      id="explosform" isinherit="yes">
-		<bootstrap thing="powBlast">
-		</bootstrap>
-		<bootstrap thing="powResist">
-		</bootstrap>
-      </minion>	
-    </thing>
+
 
   <!-- Power Sources -->
   <thing
